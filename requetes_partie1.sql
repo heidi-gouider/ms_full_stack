@@ -7,9 +7,9 @@
 ---------------
 -- Suppression des doublons
 ------------------
-
+-- la différence des deux énoncés n'est pas très claires
 -- Afficher le titre de tous les employés :
-SELECT titre FROM employe;
+SELECT nom,titre FROM employe;
 
 -- Afficher les différentes valeurs des titres des employés :
 SELECT DISTINCT titre FROM employe;
