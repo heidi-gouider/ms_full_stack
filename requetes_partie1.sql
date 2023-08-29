@@ -60,7 +60,7 @@ SELECT nom FROM employe WHERE nom LIKE 'H%';
 SELECT nom FROM employe WHERE nom LIKE '%n';
 
 -- Afficher le nom des employés contenant la lettre « u » en 3ème position :
-SELECT nom FROM employe WHERE nom LIKE '%--n%';
+SELECT nom FROM employe WHERE nom LIKE '%--u%';
 
 -- Afficher le salaire et le nom des employés du service 41 classés par salaire croissant :
 SELECT salaire,nom FROM employe WHERE nodep = 41 ORDER BY salaire;
