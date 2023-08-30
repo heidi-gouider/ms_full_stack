@@ -58,7 +58,7 @@ SELECT e1.nom,e1.titre,e1.salaire FROM employe e1 INNER JOIN (SELECT titre,salai
 -- condition de jointure
 e2 ON e1.titre = e2.titre AND e1.salaire = e2.salaire ;
 -- OU
-SELECT nom,titre,salaire FROM employe WHERE titre,salaire =(SELECT titre,salaire FROM employe WHERE nom = 'Fairent');
+SELECT nom,titre,salaire FROM employe WHERE titre, salaire = (SELECT titre,salaire FROM employe WHERE nom = 'Fairent');
 
 
 -------------
