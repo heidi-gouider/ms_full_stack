@@ -23,28 +23,26 @@ try {
     // $db->exec($sql);
     // echo 'Colonne mise à jour';
 
-    //nouveau chemin pour les images
-    $picture = 'ASSETS/';
+    // Le chemin du sous-dossier où se trouvent les images
+    $pictureDirectory = 'ASSETS/';
 
     // Exécuter la requête SQL pour mettre à jour le chemin d'accès
     //!!! j'ai fais une erreur dans ma modifiction de chemin et j'ai perdu tous les noms des images de ma base de donnée....!!!!
     // d'ou l'importance de faire une sauvegarde de la bdd !!!!!!
 
     //!!!!code erroné :
-    // $sql = "UPDATE disc SET disc_picture = :picture";
-    // $stmt = $db->prepare($sql);
-    // $stmt->bindParam(':picture', $picture, PDO::PARAM_STR);
-    // $stmt->execute();
-
-    //nouveau code :
-    // $pictureDirectory = 'ASSETS/'; 
-    // Le chemin du sous-dossier où se trouvent les images
-
-    // Exécuter la requête SQL pour mettre à jour le chemin d'accès de chaque image
-    // $sql = "UPDATE disc SET disc_picture = CONCAT(:pictureDirectory, disc_picture)";
+    // $sql = "UPDATE disc SET disc_picture = :pictureDirectory";
     // $stmt = $db->prepare($sql);
     // $stmt->bindParam(':pictureDirectory', $pictureDirectory, PDO::PARAM_STR);
     // $stmt->execute();
+
+    //nouveau code :
+
+    //Exécuter la requête SQL pour mettre à jour le chemin d'accès de chaque image
+    $sql = "UPDATE disc SET disc_picture = CONCAT(:pictureDirectory, disc_picture)";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':pictureDirectory', $pictureDirectory, PDO::PARAM_STR);
+    $stmt->execute();
 
 } catch (Exception $e) {
     // En cas d'erreur, afficher un message d'erreur et le numéro d'erreur, puis arrêter le script
@@ -86,7 +84,7 @@ $requete->closeCursor();
     <?php foreach ($tableau as $disc) : ?>
         <table>
             <div>
-                <img src="ASSETS/<?= $disc->disc_picture ?>" alt="<?= $disc->disc_title ?>">
+                <img src="<?= $disc->disc_picture ?>" alt="<?= $disc->disc_title ?>">
             </div>
             <tr>
                 <th><?= $disc->disc_title ?></th>
