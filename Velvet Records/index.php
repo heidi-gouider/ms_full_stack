@@ -20,9 +20,9 @@ $password = "ra#tro"; // serait il préférable de cacher le mot de passe ici ?
 
         //je vais modifier la structure de la table disc avec l'instruction ALTER TABLE pour y insérer des images
         //je n'utilise pas de requetes préparées car aucun utilisateur ne pourra changer la structure d'une table
-        $sql = "ALTER TABLE disc MODIFY COLUMN disc_picture BLOB";
-        $db->exec($sql);
-        echo 'Colonne mise à jour';
+        // $sql = "ALTER TABLE disc MODIFY COLUMN disc_picture BLOB";
+        // $db->exec($sql);
+        // echo 'Colonne mise à jour';
 
     } catch (Exception $e) {
         // En cas d'erreur, afficher un message d'erreur et le numéro d'erreur, puis arrêter le script
@@ -31,17 +31,22 @@ $password = "ra#tro"; // serait il préférable de cacher le mot de passe ici ?
         die("Fin du script");
     }       
 //j'utilise la méthode query de l'objet pdo pour exécuter la requete sql
-$requete = $db->query("SELECT * FROM artist");
+// $requete = $db->query("SELECT * FROM disc");
+$requete = $db->query("SELECT disc.*, artist.artist_name FROM artist INNER JOIN disc ON artist.artist_id = disc.artist_id;");
+
 // la méthode fetchall récupère toute les lignes de résultat sous forme de tableau
 // PDO::FETCH_OBJ indique que chaque ligne sera représentée comme un objet avec des propriétés correspondant aux colonnes de la table.
 $tableau = $requete->fetchAll(PDO::FETCH_OBJ);
 //Cette ligne ferme le curseur de la requête. Cela libère les ressources associées à la requête et permet de faire d'autres requêtes avec la même connexion PDO.
 $requete->closeCursor();
 
-$requete = $db->prepare("select * from disc where disc_id=?");
-// $requete->execute(array($_GET["disc_id"]));
-$disc = $requete->fetch(PDO::FETCH_OBJ);
-$requete->closeCursor();
+// $requete = $db->prepare("select * from disc where disc_id=?");
+// $requete = $db->prepare("SELECT artist_name FROM artist INNER JOIN disc ON artist.artist_id = disc.artist_id;");
+// je définie la valeur du paramètre en utilisant son nom
+// $requete = bindValue()
+// $requete->execute();
+// $artist = $requete->fetch(PDO::FETCH_OBJ);
+// $requete->closeCursor();
 
 
 ?>
@@ -53,18 +58,25 @@ $requete->closeCursor();
 <html>
 <body>
 
-<?php 
-foreach ($tableau as $artist): ?>
-        <div>
-            <?= $artist->artist_name ?>
-        </div>
+    <?php foreach ($tableau as $disc): ?>
+        <table>
+            <tr><img src="Velvet Records/ASSETS<?= $disc['disc_picture'] ?>" alt="<?= $disc['disc_title'] ?>"></tr>
+        </table>
+        <table>
+         <!-- l'entete de des differents album -->
+         <!-- <td> -->
+    <tr>
+        <th><?= $disc->disc_title ?></th>
+    </tr>
+    
+        <tr><td><?= $disc->artist_name ?></td></tr>
+        <tr><td>Label : <?= $disc->disc_label ?></td></tr>
+        <tr><td>Year : <?= $disc->disc_year?></td></tr>
+        <tr><td>Genre : <?= $disc->disc_genre ?></td></tr>
+    <!-- </td> -->
+    </table>
     <?php endforeach; ?>
-</br>
-    Disc N° <?= $disc->disc_id ?>
-    Disc name <?= $disc->disc_name ?>
-    Disc year <?= $disc->disc_year ?>
-     
 
-
+    
 </body>
 </html>
