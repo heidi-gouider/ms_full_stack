@@ -50,6 +50,7 @@ $requete->closeCursor();
 
 
 ?>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -60,7 +61,7 @@ $requete->closeCursor();
 
     <?php foreach ($tableau as $disc): ?>
         <table>
-            <tr><img src="Velvet Records/ASSETS<?= $disc['disc_picture'] ?>" alt="<?= $disc['disc_title'] ?>"></tr>
+            <tr><img src="/ASSETS"<?= $disc->disc_picture ?> alt=<?= $disc->disc_title ?>></tr>
         </table>
         <table>
          <!-- l'entete de des differents album -->
