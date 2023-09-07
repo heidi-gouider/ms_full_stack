@@ -20,7 +20,7 @@ $password = "ra#tro"; // serait il préférable de cacher le mot de passe ici ?
 
         //je vais modifier la structure de la table disc avec l'instruction ALTER TABLE pour y insérer des images
         //je n'utilise pas de requetes préparées car aucun utilisateur ne pourra changer la structure d'une table
-        $sql = "ALTER TABLE disc MODIFY COLUMN disc_picture BLOB";
+        $sql = "ALTER TABLE disc MODIFY COLUMN disc_picture VARCHAR(255)";
         $db->exec($sql);
         echo 'Colonne mise à jour';
 
