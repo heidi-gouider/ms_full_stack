@@ -60,14 +60,17 @@ $requete->closeCursor();
 <body>
 
     <?php foreach ($tableau as $disc): ?>
-        <table>
-            <tr><img src="/ASSETS"<?= $disc->disc_picture ?> alt=<?= $disc->disc_title ?>></tr>
-        </table>
+        <div>
+            <img src=<?=$disc->disc_picture ?> alt=<?= $disc->disc_title ?>>
+
+    </div>
         <table>
          <!-- l'entete de des differents album -->
          <!-- <td> -->
     <tr>
         <th><?= $disc->disc_title ?></th>
+        <!-- <th><?= $disc->disc_picture ?></th> -->
+
     </tr>
     
         <tr><td><?= $disc->artist_name ?></td></tr>
