@@ -37,6 +37,7 @@ $requete->closeCursor();
 ?>
 
 
+<a href="add_form.php" class="btn btn-primary">Ajouter</a>
 
     <?php foreach ($tableau as $disc) : ?>
         <div class="card" style="width: 18rem;">

@@ -21,7 +21,7 @@ $requete->closeCursor();
 ?>
 
 <form>
-  <fieldset disabled>
+  <fieldset>
     <legend>Ajouter un vinyle</legend>
     <div class="mb-3">
       <label for="Title" class="form-label">Title</label>
@@ -51,7 +51,7 @@ $requete->closeCursor();
     </div>
 <!-- choisir un fichier -->
     <input class="btn btn-primary" type="button" value="Ajouter">
-    <a class="btn btn-primary" href="#" role="button">Retour</a>
+    <a class="btn btn-primary" href="index.php" role="button">Retour</a>
   </fieldset>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
