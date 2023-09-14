@@ -17,7 +17,7 @@
             echo $i . " ";
         }
     }
-echo "<br/><br/>";
+    echo "<br/><br/>";
 
     // 2. Écrire un programme qui écrit 500 fois la phrase Je dois faire des sauvegardes régulières de mes fichiers
 
@@ -40,12 +40,12 @@ echo "<br/><br/>";
 
     // 3. Afficher la table de multiplication pour les nombres de 1 à 9 dans un tableau HTML
 
-// variables
+    // variables
     $taille = 10;
     $tableau = array();
 
-// Boucle pour générer les valeurs de la table de multiplication
-// Avec un tableau multidimensionnel
+    // Boucle pour générer les valeurs de la table de multiplication
+    // Avec un tableau multidimensionnel
     for ($i = 1; $i <= $taille; $i++) {
         $tableau[$i] = array(); // Cré un sous-tableau pour chaque ligne 
 
@@ -54,7 +54,7 @@ echo "<br/><br/>";
         }
     }
 
-// J'affiche le tableau
+    // J'affiche le tableau
 
     echo "<table>";
     foreach ($tableau as $ligne) {
@@ -64,39 +64,39 @@ echo "<br/><br/>";
         }
         echo "</tr>";
     }
-  
+
 
     echo "</table><br>";
     echo "Les TABLEAUX <br/><br/>";
 
-// A- Mois de l'année non bissextile
+    // A- Mois de l'année non bissextile
 
     // 1. Créez un tableau associant ('associatif') à chaque mois de l’année le nombre de jours du mois :
     // le nom des mois sont les clés du tableau.
-    echo"<table>";
+    echo "<table>";
 
     $yearsTab = ["Janvier" => 31, "Février" => 28, "Mars" => 31, "Avril" => 30, "Mai" => 31, "Juin" => 30, "Juillet" => 31, "Août" => 31, "Septembre" => 30, "Octobre" => 31, "Novembre" => 30, "Décembre" => 31];
     // $nbMois = count($yearsTab);
 
     // echo"Le tableau contient ".$nbMois." éléments."; 
-    
 
-// je parcour le tableau "pour chaque clés du tableau j'assigne une valeur
 
-    foreach ($yearsTab as $mois=>$valeur) {
-            // j'affiche le tableau
+    // je parcour le tableau "pour chaque clés du tableau j'assigne une valeur
+
+    foreach ($yearsTab as $mois => $valeur) {
+        // j'affiche le tableau
         echo "<tr><td>$mois</td><th>$valeur</th>
          </tr>";
     };
-echo"</table>";
-//  je supprime un élément 
+    echo "</table>";
+    //  je supprime un élément 
     // $lala= array("kk","ll","ee");
     // unset($lala["l"]);
-    
+
     // print_r($lala) ;
 
-echo "<br/><br/>";
-// B- Capitales
+    echo "<br/><br/>";
+    // B- Capitales
 
     $capitales = array(
         "Bucarest" => "Roumanie",
@@ -164,7 +164,7 @@ echo "<br/><br/>";
     ksort($capitales);
 
     foreach ($capitales as $key => $valeur) {
-        echo "$key = $valeur". "<br/>";
+        echo "$key = $valeur" . "<br/>";
     };
     echo "<br/><br/>";
 
@@ -175,7 +175,7 @@ echo "<br/><br/>";
     asort($capitales);
 
     foreach ($capitales as $key => $valeur) {
-        echo "$valeur = $key". "<br/>";
+        echo "$valeur = $key" . "<br/>";
     };
 
     // 3. Affichez le nombre de pays dans le tableau
@@ -185,9 +185,103 @@ echo "<br/><br/>";
     echo "<br/><br/>";
 
     // 4. Supprimer du tableau toutes les capitales ne commençant par la lettre 'B', puis affichez le contenu du tableau : avec strpos
+    //je définie la lettre de référence
+    foreach ($capitales as $capitale => $pays) {
+        $letterRef = strtolower(substr($capitale, 0, 1));
+
+        if ($letterRef === 'b') {
+            unset($capitales[$capitale]);
+        }
+    }
+    echo "lal";
+    print_r($capitales);
 
 
+    echo "<br/><br/>";
+    echo "Les FONCTIONS <br/><br/>";
 
+//Ecrivez une fonction qui permette de générer un lien.
+
+    function createLink($target, $linkText)
+    {
+        // $target = 'https://www.reddit.com/';
+        // $linkText = 'Reddit Hug';
+    
+        $htmlLink = '<a href="' . $target . '">' . $linkText . '</a>';
+
+        return $htmlLink;
+    }
+  // Appel de la fonction et affichage du lien généré
+$target = 'https://www.reddit.com/';
+$linkText = 'Reddit Hug';
+
+$lienReddit = createLink($target, $linkText);
+
+echo $lienReddit;
+echo "<br/><br/>";
+
+//Ecrivez une fonction qui calcul la somme des valeurs d'un tableau
+$tab = array(4, 3, 8, 2);
+// $resultat = sum($tab);
+
+function somme($tab){
+    $resultat = array_sum($tab);
+    // return $resultat;
+    //le return permet de retourner le résultat que je peux stocker dans une varible si je le souhaite par la suite
+    //la réutiliser
+    echo "$resultat";
+
+}
+
+// echo somme($tab);
+somme($tab);
+echo "<br/><br/>";
+
+
+//Créer une fonction qui vérifie le niveau de complexité d'un mot de passe :
+
+//je vais utiliser la fonction preg_match pour voir si la chaine de caractere correspond à l'expression réguliere
+    function complex_password($password) {
+        if (preg_match("/^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z]).{8,}$/", $password)){
+            return true;
+            // echo "mot de passe valide";
+        } else {
+            return false;
+            // echo "mot de passe invalide";
+        }
+    }
+    
+// Exemple d'utilisation
+$resultat = complex_password("TopSecret42");
+var_dump($resultat); // Affichera bool(true ou false)
+// echo complex_password()
+// echo complex_password($password);
+echo "<br/><br/>";
+
+echo "Les dates et les heures <br/><br/>";
+
+//!!! il est possible de configurer la time zone dans le fichier php.ini, attention toute fois en fonction
+//des projet et de l'environnement de dev des éventuelle conflits ( comme avec symfony)
+//je vais donc utiliser ici la ligne de code suivante dans mon script :
+date_default_timezone_set("Europe/Paris");
+
+//Trouvez le numéro de semaine de la date suivante : 14/07/2019. 
+$date1 = '14/07/2019';
+$date2 = strtotime($date1);
+echo date('W');
+echo "<br/><br/>";
+//ou
+// $Date = new DateTime("14/07/2019");
+// echo date("W");
+
+echo "<br/><br/>";
+
+//Combien reste-t-il de jours avant la fin de votre formation.
+$Date = new DateTime();
+$dateEnd = new DateTime('13/10/2023');
+$interval = $date->diff($dateEnd);
+$nbDays = $interval-> days;
+echo $nbDays;
     ?>
 </body>
 
