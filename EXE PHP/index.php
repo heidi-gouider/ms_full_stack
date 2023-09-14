@@ -263,7 +263,7 @@ echo "Les dates et les heures <br/><br/>";
 //!!! il est possible de configurer la time zone dans le fichier php.ini, attention toute fois en fonction
 //des projet et de l'environnement de dev des éventuelle conflits ( comme avec symfony)
 //je vais donc utiliser ici la ligne de code suivante dans mon script :
-date_default_timezone_set("Europe/Paris");
+// date_default_timezone_set("Europe/Paris");
 
 //Trouvez le numéro de semaine de la date suivante : 14/07/2019. 
 $date1 = '14/07/2019';
@@ -274,14 +274,30 @@ echo "<br/><br/>";
 // $Date = new DateTime("14/07/2019");
 // echo date("W");
 
+//Combien reste-t-il de jours avant la fin de votre formation.
+$dateStart = new DateTime();
+$dateEnd = new DateTime('13-10-2023');
+$interval = $dateStart->diff($dateEnd);
+$nbDays = $interval->days;
+echo $nbDays;
 echo "<br/><br/>";
 
-//Combien reste-t-il de jours avant la fin de votre formation.
-$Date = new DateTime();
-$dateEnd = new DateTime('13/10/2023');
-$interval = $date->diff($dateEnd);
-$nbDays = $interval-> days;
-echo $nbDays;
+// echo $interval->format('%a jours');
+echo "Jours restant: ", $interval->format("%a");
+echo "<br/><br/>";
+
+//Comment déterminer si une année est bissextile ?
+$date = new DateTime('Y');
+// $nbDays = 
+// if ($date === 0);
+//Montrez que la date du 32/17/2019 est erronée.
+
+//Affichez l'heure courante sous cette forme : 11h25.
+
+//Ajoutez 1 mois à la date courante.
+
+//Que s'est-il passé le 1000200000
+
     ?>
 </body>
 
