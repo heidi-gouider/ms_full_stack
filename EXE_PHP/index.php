@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Titre de la page</title>
+    <title>exercices php</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 
@@ -422,9 +422,23 @@
             </thead>
             <tbody>
                 <?php
-                $customers = file('EXE_PHP/compteur.txt');
-
-                ?>
+                // $champs = "Surname, Firstname, Email, Phone, City, State";
+            //     $content = file('EXE_PHP/customers.csv');
+            //     foreach ($content as $field) {
+            //         $userData = explode(',', $field);{
+            //     }
+            //     echo '<tr>';
+            //     foreach ($userData as $field) {
+            //         echo '<td>' . htmlspecialchars($field) . '</td>';
+            //     }
+            
+            //     echo "</tr>";
+            // }
+            ?>
+        </tbody>
+    </table>
+</div>                    
+       
 </body>
 
 </html>
