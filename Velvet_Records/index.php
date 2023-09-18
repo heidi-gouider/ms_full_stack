@@ -13,15 +13,19 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 //connexion à la base de donnée
-include('db.php');
+require_once('db.php');
 
 //j'utilise la méthode query de l'objet pdo pour exécuter la requete sql
 // $requete = $db->query("SELECT * FROM disc");
 $requete = $db->query("SELECT disc.*, artist.artist_name FROM artist INNER JOIN disc ON artist.artist_id = disc.artist_id;");
 
+// $compte = $db->query("SELECT COUNT disc.* as total FROM disc ");
+
 // la méthode fetchall récupère toute les lignes de résultat sous forme de tableau
 // PDO::FETCH_OBJ indique que chaque ligne sera représentée comme un objet avec des propriétés correspondant aux colonnes de la table.
 $tableau = $requete->fetchAll(PDO::FETCH_OBJ);
+// $result = $compte->fetchAll(PDO::FETCH_OBJ);
+
 //Cette ligne ferme le curseur de la requête. Cela libère les ressources associées à la requête et permet de faire d'autres requêtes avec la même connexion PDO.
 $requete->closeCursor();
 
@@ -34,8 +38,10 @@ $requete->closeCursor();
 //$requete->closeCursor();
 
 
-?>
+ // Afficher le nombre de disques
 
+//  echo "Liste des disques : " . $result['total'];
+?>
 
 <a href="add_form.php" class="btn btn-primary">Ajouter</a>
 

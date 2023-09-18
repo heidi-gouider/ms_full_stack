@@ -12,7 +12,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 //connexion à la base de donnée
-include('db.php');
+require_once('db.php');
 
 $requete = $db->prepare("select * from disc where disc_id=?");    
 // $requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
