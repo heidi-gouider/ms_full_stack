@@ -9,12 +9,14 @@
 
 <body>
     <?php
-    echo 'Email : ' . $_POST["mail"] . '<br>';
-    echo 'Mot de passe : ' . $_POST["password"] . '<br>';
+    // echo 'Email : ' . $_POST["mail"] . '<br>';
+    // echo 'Mot de passe : ' . $_POST["password"] . '<br>';
+    
     ?>
 </body>
 
-</html>mail:admin
+</html>
+mail:admin
 password:admin
 timestamp:2023-09-18 14:26:33
 mail:hdhdh

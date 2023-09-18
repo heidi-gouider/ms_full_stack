@@ -81,49 +81,31 @@ $realm = 'Restricted area';
 //utilisateur => mot de passe
 $users = array('admin' => 'admin');
 
-if (empty($_SERVER['PHP_AUTH_DIGEST'])) {
-  header('HTTP/1.1 401 Unauthorized');
-  header('WWW-Authenticate: Digest realm="'.$realm.
-         '",qop="auth",nonce="'.uniqid().'",opaque="'.md5($realm).'"');
+if (!empty($_POST)) {
+  if (isset($_POST["email"], $_POST["password"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
+      $email = $_POST["email"];
+      $password = $_POST["password"];
 
-  die('Texte utilisé si le visiteur utilise le bouton d\'annulation');
-}
+      // Requête SQL pour récupérer l'utilisateur avec l'email donné
+      $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
+      $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+      $stmt->execute();
+      $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// analyse la variable PHP_AUTH_DIGEST
-if (!($data = http_digest_parse($_SERVER['PHP_AUTH_DIGEST'])) ||
-  !isset($users[$data['username']]))
-  die('Mauvaise Pièce d\'identité!');
-
-
-// Génération de réponse valide
-$A1 = md5($data['username'] . ':' . $realm . ':' . $users[$data['username']]);
-$A2 = md5($_SERVER['REQUEST_METHOD'].':'.$data['uri']);
-$valid_response = md5($A1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$A2);
-
-if ($data['response'] != $valid_response)
-  die('Mauvaise Pièce d\'identitée!');
-
-// ok, utilisateur & mot de passe valide
-echo 'Vous êtes identifié en tant que : ' . $data['username'];
-
-
-// fonction pour analyser l'en-tête http auth
-function http_digest_parse($txt)
-{
-  // protection contre les données manquantes
-  $needed_parts = array('nonce'=>1, 'nc'=>1, 'cnonce'=>1, 'qop'=>1, 'username'=>1, 'uri'=>1, 'response'=>1);
-  $data = array();
-  $keys = implode('|', array_keys($needed_parts));
-
-  preg_match_all('@(' . $keys . ')=(?:([\'"])([^\2]+?)\2|([^\s,]+))@', $txt, $matches, PREG_SET_ORDER);
-
-  foreach ($matches as $m) {
-      $data[$m[1]] = $m[3] ? $m[3] : $m[4];
-      unset($needed_parts[$m[1]]);
+      if ($user && password_verify($password, $user["password"])) {
+          // L'authentification a réussi
+          // Vous pouvez créer une session ici ou définir un cookie d'authentification
+          session_start();
+          $_SESSION["user_id"] = $user["id"];
+          echo "Authentification réussie !";
+      } else {
+          echo "Identifiants incorrects.";
+      }
+  } else {
+      echo "Veuillez remplir tous les champs.";
   }
-
-  return $needed_parts ? false : $data;
 }
+
 // Lire le contenu du fichier login_script.php et afficher les données
 // if (file_exists($cheminScript)) {
 // Lire le contenu du fichier dans une variable
