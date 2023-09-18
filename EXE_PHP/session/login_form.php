@@ -47,64 +47,40 @@
 <?php
 // $cheminScript = __DIR__ . "/login_script.php";
 
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
+// if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
     // elements à afficher
-    $datas = $_POST;
+    // $datas = $_POST;
 
     // Ajout de la date (heure d'envoi) aux données
-    $datas['timestamp'] = date('Y-m-d H:i:s');
+    // $datas['timestamp'] = date('Y-m-d H:i:s');
 
     // Je stocke le chemin du fichier vers lequel les données récupérés vont être affiché dans une variables
-    $cheminScript = "login_script.php";
+    // $cheminScript = "login_script.php";
 
     // La fonction fopen() = file open > permet d'ouvrir un fichier
     // les paramètres de cette fonction sont (nom du fichier à ouvrir, mode d'ouverture du dit fichier)"a"=append
-    $fp = fopen($cheminScript, "a");
+    // $fp = fopen($cheminScript, "a");
 
     // Parcours des données et écriture dans le fichier txt
     // foreach ($REQUEST as $data=>$valeur){
-    foreach ($datas as $champ => $valeur) {
-        fwrite($fp, $champ . ":" . $valeur . "\n");
+    // foreach ($datas as $champ => $valeur) {
+    //     fwrite($fp, $champ . ":" . $valeur . "\n");
         // fputs($fp, $datas . ":" . $valeur . "\n");
-    }
+    // }
 
-    fclose($fp);
+    // fclose($fp);
     // var_dump($_POST);
   // Redirige l'utilisateur vers une page de confirmation après la soumission réussie
   // header("Location: confirmation.php");
-  exit(); //  terminer le script ici pour éviter toute exécution supplémentaire
-}
+  // exit(); 
+  //  terminer le script ici pour éviter toute exécution supplémentaire
+// }
 
-$realm = 'Restricted area';
 
 //utilisateur => mot de passe
-$users = array('admin' => 'admin');
+// $users = array('admin' => 'admin');
 
-if (!empty($_POST)) {
-  if (isset($_POST["email"], $_POST["password"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
-      $email = $_POST["email"];
-      $password = $_POST["password"];
-
-      // Requête SQL pour récupérer l'utilisateur avec l'email donné
-      $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
-      $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-      $stmt->execute();
-      $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-      if ($user && password_verify($password, $user["password"])) {
-          // L'authentification a réussi
-          // Vous pouvez créer une session ici ou définir un cookie d'authentification
-          session_start();
-          $_SESSION["user_id"] = $user["id"];
-          echo "Authentification réussie !";
-      } else {
-          echo "Identifiants incorrects.";
-      }
-  } else {
-      echo "Veuillez remplir tous les champs.";
-  }
-}
 
 // Lire le contenu du fichier login_script.php et afficher les données
 // if (file_exists($cheminScript)) {
