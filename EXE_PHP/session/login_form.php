@@ -24,7 +24,9 @@
 //Les sessions sont un outil polyvalent pour gérer les données côté serveur tout au long de la visite de l'utilisateur sur un site web.
 ?>
  <div class="container mx-auto" id="formulaire">
-    <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post" onsubmit="return valider(event)" id="valid"  novalidate>
+    <!-- <form action="<?php //echo $_SERVER["PHP_SELF"]; ?>" method="post" onsubmit="return valider(event)" id="valid"  novalidate> -->
+    <form action="login_script.php" method="post" onsubmit="return valider(event)" id="valid" novalidate>
+
     <!-- class="validation row col-8 m-5 " -->
 <div class="col-md-6 mb-4">
     <label for="exampleInputEmail1" class="form-label">Email</label>
