@@ -11,21 +11,46 @@
 
 
     <?php
-    echo "php -S localhost:8000";
+    echo "Formulaire de connexion";
     echo "<br/><br/>";
 
-    echo "Development Server (http://localhost:8000) started";
-    echo "<br/><br/>";
+    // echo "Development Server (http://localhost:8000) started";
+    // echo "<br/><br/>";
 
 //les sessions en PHP sont souvent utilisées en lien avec l'authentification, mais elles ne se limitent pas uniquement à cela.
 //Les sessions sont un mécanisme de gestion de l'état côté serveur qui peut être utilisé pour stocker des informations spécifiques à un utilisateur pendant sa visite sur un site web.     
 //Elles peuvent également être utilisées pour d'autres tâches de gestion de l'état,
 //telles que le suivi d'articles dans un panier d'achat, le stockage de préférences de l'utilisateur, la gestion de formulaires multi-pages, etc.
 //Les sessions sont un outil polyvalent pour gérer les données côté serveur tout au long de la visite de l'utilisateur sur un site web.
+
+
+// Configuration de l'attribut SameSite pour les cookies de session
+session_set_cookie_params([
+  // Ou 'Lax' ou 'Strict' selon vos besoins
+  'samesite' => 'None', 
+  // Utilisez 'secure' uniquement si vous utilisez HTTPS
+  'secure' => true,     
+  'httponly' => true,
+]);
+//j'active la session
+session_start();
+
 ?>
+<div class="error-message">
+<?php
+// Vérifier si un message d'erreur est présent dans la session
+if (isset($_SESSION['error_message'])) {
+    // Afficher le message d'erreur dans le formulaire
+    echo $_SESSION['error_message'];
+    // Effacer le message d'erreur de la session
+    unset($_SESSION['error_message']);
+}
+?>
+</div>
  <div class="container mx-auto" id="formulaire">
     <!-- <form action="<?php //echo $_SERVER["PHP_SELF"]; ?>" method="post" onsubmit="return valider(event)" id="valid"  novalidate> -->
-    <form action="login_script.php" method="post" onsubmit="return valider(event)" id="valid" novalidate>
+    <form action="login_script.php" method="post" id="valid" novalidate>
+    <!-- onsubmit="return valider(event)"  -->
 
     <!-- class="validation row col-8 m-5 " -->
 <div class="col-md-6 mb-4">
@@ -46,70 +71,6 @@
  </div>
 
 
-<?php
-// $cheminScript = __DIR__ . "/login_script.php";
-
-// if ($_SERVER['REQUEST_METHOD'] === "POST") {
-
-    // elements à afficher
-    // $datas = $_POST;
-
-    // Ajout de la date (heure d'envoi) aux données
-    // $datas['timestamp'] = date('Y-m-d H:i:s');
-
-    // Je stocke le chemin du fichier vers lequel les données récupérés vont être affiché dans une variables
-    // $cheminScript = "login_script.php";
-
-    // La fonction fopen() = file open > permet d'ouvrir un fichier
-    // les paramètres de cette fonction sont (nom du fichier à ouvrir, mode d'ouverture du dit fichier)"a"=append
-    // $fp = fopen($cheminScript, "a");
-
-    // Parcours des données et écriture dans le fichier txt
-    // foreach ($REQUEST as $data=>$valeur){
-    // foreach ($datas as $champ => $valeur) {
-    //     fwrite($fp, $champ . ":" . $valeur . "\n");
-        // fputs($fp, $datas . ":" . $valeur . "\n");
-    // }
-
-    // fclose($fp);
-    // var_dump($_POST);
-  // Redirige l'utilisateur vers une page de confirmation après la soumission réussie
-  // header("Location: confirmation.php");
-  // exit(); 
-  //  terminer le script ici pour éviter toute exécution supplémentaire
-// }
-
-
-//utilisateur => mot de passe
-// $users = array('admin' => 'admin');
-
-
-// Lire le contenu du fichier login_script.php et afficher les données
-// if (file_exists($cheminScript)) {
-// Lire le contenu du fichier dans une variable
-// $contenu = file_get_contents($cheminScript);
-
-// Diviser le contenu en lignes en utilisant le saut de ligne comme délimiteur
-// $lignes = explode("\n", $contenu);
-
-// Parcourir chaque ligne et afficher les données
-// foreach ($lignes as $ligne) {
-// Diviser la ligne en deux parties : le nom du champ et sa valeur
-// $donnees = explode(":", $ligne);
-
-// Vérifier si le champ et sa valeur existent
-// if (count($donnees) === 2) {
-//     $champ = trim($donnees[0]);
-//     $valeur = trim($donnees[1]);
-
-// Afficher le champ et sa valeur
-//             echo "$champ : $valeur<br>";
-//         }
-//     }
-// } else {
-//     echo "Aucune donnée n'a été enregistrée pour le moment.";
-// }
-?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>

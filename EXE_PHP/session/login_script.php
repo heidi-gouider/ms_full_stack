@@ -9,12 +9,11 @@
 
 <body>
     <?php
-    // echo 'Email : ' . $_POST["mail"] . '<br>';
-    // echo 'Mot de passe : ' . $_POST["password"] . '<br>';
-    // $userMail = $_POST["admin"];
-    // $passwowrd = $_POST["heidi"];
+  
+    /*j'initialise une session*/
+    session_start();
 
-    // Récupérer les données du formulaire
+    // je vérifie si le form a été soumis
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //vérifier si le form a été envoyé
@@ -26,35 +25,62 @@
             isset($_POST["mail"], $_POST["password"])
             && !empty($_POST["mail"]) && !empty($_POST["password"])
         ){     
-        //vérifier si les données sont correctes
+            //je récupère les données saisies
             $userMail = $_POST["mail"];
             $passwowrd = $_POST["password"];
-            $password_hash = password_hash("heidi", PASSWORD_DEFAULT);
 
+            // je crypte le mot de passe
+            $password_hash = password_hash("heidi", PASSWORD_DEFAULT);
+        
+        // Vérifier si les données sont correctes en utilisant password_verify
         if ($userMail === "heidi" && password_verify($passwowrd, $password_hash)){
-            // var_dump($userMail, $passwowrd);
-            echo "Bienvenue" . $userMail;
+            // var_dump($userMail, $passwowrd_hash);
+            // echo "Bienvenue " . $userMail . "!";
+
+            $_SESSION["mail"] = $userMail;
+            $_SESSION["password"] = $password_hash;
+
+            // Si les données sont correctes, initialiser la session
+            // $_SESSION["auth"] = "ok";
+        
+            //je redirige vers une autre page 
+                header("Location:connexion.php");
+            exit();
+
         } else {
-            // Les données fournies ne sont pas correctes
-            die("Données incorrectes !");
-        }
+            // si les données fournies ne sont pas correctes, je détruit les variables de session
+            unset($_SESSION["mail"]);
+            unset($_SESSION["password"]);  
+            
+            // Si les cookies de session sont utilisés, les invalider
+            if (ini_get("session.use_cookies")){
+                setcookie(session_name(), '', time()-42000);
+            }
+            //je détruit la session
+            session_destroy();
+
+            // Définir un message d'erreur dans une variable de session
+            $_SESSION['error_message'] = 'Données incorrectes !';
+
+             // Rediriger vers le formulaire de connexion
+            header("Location: login_form.php");
+            exit();
+            // j'utilise la fonction die() pour arreter le script en cas d'erreur et j'affiche un message
+            // echo "Données incorrectes !";
+
+            }
+
+        // } else {
+        //     // j'utilise la fonction die() pour arreter le script en cas d'erreur et j'affiche un message
+        //     die("Données incorrectes !");
+        
 
         } else {
             die ("formulaire imcomplet!");
         }
     }
-        // Récupérer les données du formulaire
-    // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    //     $userMail = $_POST["mail"];
-    //     $passwowrd = $_POST["password"];
-    //     var_dump($userMail, $passwowrd);
-    // } else {
-    //     die ("mot de passe et identifiant incorecte!");
-    // }
 
 
-
-    //vérifier si les identifiants sont true
     ?>
 </body>
 
