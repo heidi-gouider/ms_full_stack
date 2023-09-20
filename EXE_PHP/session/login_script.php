@@ -48,6 +48,7 @@
 
                 // Si les données sont correctes, initialiser la session
                 // $_SESSION["auth"] = "ok";
+                // var_dump($passwowrd)
 
                 //je redirige vers une autre page 
                 header("Location:connexion.php");
@@ -81,6 +82,9 @@
 
         } else {
             die("formulaire imcomplet!");
+            // header("Location: login_form.php");
+            // exit();
+
         }
     }
 

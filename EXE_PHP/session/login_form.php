@@ -43,7 +43,7 @@ if (isset($_SESSION['error_message'])) {
     // Afficher le message d'erreur dans le formulaire
     echo $_SESSION['error_message'];
     // Effacer le message d'erreur de la session
-    unset($_SESSION['error_message']);
+    // unset($_SESSION['error_message']);
 }
 ?>
 </div>

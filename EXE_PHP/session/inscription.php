@@ -37,6 +37,34 @@
             // Effacer le message d'erreur de la session
             unset($_SESSION['error_message']);
         }
+        if ($_SERVER['REQUEST_METHOD'] === "POST") {
+
+            // elements à afficher
+            $datas = $_POST;
+        
+            // Ajout de la date (heure d'envoi) aux données
+            $datas['timestamp'] = date('Y-m-d H:i:s');
+        
+            // Je stocke le chemin du fichier vers lequel les données récupérés vont être affiché dans une variables
+            $cheminTarget = "data_user.txt";
+        
+            // La fonction fopen() = file open > permet d'ouvrir un fichier
+            // les paramètres de cette fonction sont (nom du fichier à ouvrir, mode d'ouverture du dit fichier)"a"=append
+            $fp = fopen($cheminTarget, "a");
+        
+            // Parcours des données et écriture dans le fichier txt
+            // foreach ($REQUEST as $data=>$valeur){
+            foreach ($datas as $champ => $valeur) {
+                fwrite($fp, $champ . ":" . $valeur . "\n");
+                // fputs($fp, $datas . ":" . $valeur . "\n");
+            }
+        
+            fclose($fp);
+            // var_dump($_POST);
+          // Redirige l'utilisateur vers une page de confirmation après la soumission réussie
+          header("Location: confirmation.php");
+          exit(); //  terminer le script ici pour éviter toute exécution supplémentaire
+        }
         ?>
     </div>
     <div class="container mx-auto" id="formulaire">
@@ -62,6 +90,11 @@
                 <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
                 <input type="password" class="form-control" id="exampleInputPassword1" name="password">
             </div>
+            <div class="col-md-6 mb-4">
+                <label for="exampleInputPassword1" class="form-label">Confirmer votre mot de passe</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+            </div>
+
             <!-- <div class="mb-3 form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label>
