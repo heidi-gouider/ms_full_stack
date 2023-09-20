@@ -28,6 +28,7 @@ try {
     // Exécuter la requête SQL pour mettre à jour le chemin d'accès
     //!!! j'ai fais une erreur dans ma modifiction de chemin et j'ai perdu tous les noms des images de ma base de donnée....!!!!
     // d'ou l'importance de faire une sauvegarde de la bdd !!!!!!
+    //attention!!!! ne pas modifier une constante le chemin des données liée a la table disc est une constante 
 
     //!!!!code erroné :
     // $sql = "UPDATE disc SET disc_picture = :pictureDirectory";
@@ -42,6 +43,7 @@ try {
 
     //Exécuter la requête SQL pour mettre à jour le chemin d'accès de chaque image
     // $sql = "UPDATE disc SET disc_picture = CONCAT(:pictureDirectory, disc_picture)";
+// $sql = UPDATE `disc` SET `disc_picture` = 'ASSETS/After the Gold Rush.jpeg' WHERE `disc`.`disc_id` = 5; 
     // $stmt = $db->prepare($sql);
     // $stmt->bindParam(':pictureDirectory', $pictureDirectory, PDO::PARAM_STR);
     // $stmt->execute();

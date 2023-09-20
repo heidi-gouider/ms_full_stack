@@ -12,7 +12,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 //connexion à la base de donnée
-include('db.php');
+require_once('db_conect.php');
 
 $requete = $db->query("SELECT artist.* FROM artist");
 $tableau = $requete->fetchAll(PDO::FETCH_OBJ);
@@ -28,10 +28,24 @@ $requete->closeCursor();
       <input type="text" id="disabledTextInput" class="form-control" placeholder="Enter title">
     </div>
     <div class="mb-3">
+
       <label for="Artist" class="form-label">Disabled select menu</label>
-      <select id="disabledSelect" class="form-select">
-        <option>Disabled select</option>
+      <select id="disabledSelect" name="artist_id" class="form-select">
+  <!--
+        // echo '<option value="' .$artist->arrtist_name'"> .'</option>';
+        // echo '<select name="nom_artiste">';
+
+// Parcourez le tableau d'artistes pour créer des options
+// foreach ($tableau as $artist) {
+    // Utilisez la valeur de chaque élément du tableau pour remplir la balise <option>
+    // echo '<option value="' . .$artist->arrtist_name' .$artist->arrtist_name' '">' . .$artist->arrtist_name' . '</option>';
+// }
+
+// Fermez la balise de sélection
+// echo '</select>';
+-->  
       </select>
+
     </div>
     <div class="mb-3">
       <label for="Year" class="form-label">year</label>

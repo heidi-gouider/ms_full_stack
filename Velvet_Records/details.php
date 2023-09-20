@@ -12,7 +12,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 //connexion à la base de donnée
-require_once('db.php');
+require_once('db_conect.php');
 
 $requete = $db->prepare("select * from disc where disc_id=?");    
 // $requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
@@ -28,6 +28,7 @@ $requete = $db->prepare("select * from disc where disc_id=?");
   <!-- <fieldset disabled> -->
     <legend>Details</legend>
     <!-- <div class="col"></div> -->
+
     <div class="col-mb-6">
       <label for="Title" class="form-label">Title</label>
       <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->disc_title ?>">
@@ -51,6 +52,8 @@ $requete = $db->prepare("select * from disc where disc_id=?");
     <!-- <div class="mb-3"> -->
       <label for="Price" class="form-label"></label>
       <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->disc_price ?>">
+      <img src="ASSETS/<?= $disc->disc_picture ?>" alt="<?= $disc->disc_title ?>">
+
     <!-- </div> -->
     <a class="btn btn-primary" href="#">Modifier</a>
     <a class="btn btn-primary" href="#">Supprimer</a>
