@@ -17,30 +17,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //pour vérifier la validité du format d'entrée je peux :
     // 1. utiliser des regex
     // 2. des fonctions php comme => filter_var (voir doc php : types de filtres => filtres de validation)
-
     //vérifier le formulaire
     if (
-        isset($_POST["title"], $_POST["name"], $_POST["year"], $_POST["genre"], $_POST["label"])
+        isset($_POST["title"], $_POST["year"], $_POST["genre"], $_POST["label"])
         
     ) {
         //je récupère les données saisies
         $title = $_POST["title"];
-        $name = $_POST["name"];
+        // $atist = $_POST["artist"];
         $year = $_POST["year"];
         $genre = $_POST["genre"];
         $label = $_POST["label"];
+        $price = $_POST["price"];
 
-        $insertDisc = $db->prepare('INSERT INTO disc (disc_title,disc_year, disc_genre, disc_label)
-        VALUES (:title, :disc_year, :genre, :label)' );
+        $sql = "INSERT INTO disc (disc_title,disc_year, disc_genre, disc_label)
+        VALUES (:title,:disc_year, :genre, :label)";
+
+        // $insertDisc = $db->prepare('INSERT INTO disc (disc_title,disc_year, disc_genre, disc_label)
+        // VALUES (:title, :disc_year, :genre, :label)' );
+        $insertDisc = $db->prepare($sql);
+
+        // $insertDisc->bindValue(":title", $title, PDO::PARAM_STR);
+        // $insertDisc->bindValue(":artist", $artist, PDO::PARAM_STR);
+        // $insertDisc->bindValue(":disc_year", $year, PDO::PARAM_INT);
+        // $insertDisc->bindValue(":genre", $genre, PDO::PARAM_STR);
+        // $insertDisc->bindValue(":label", $label, PDO::PARAM_STR);
+        // $insertDisc->bindValue(":price", $price, PDO::PARAM_STR);
+
         $insertDisc->execute([
-        'title' => $title,
+                    'title' => $title,
         'disc_year' => $year,
         'genre' => $genre,
         'label' => $label
         ]);
 
+        
+
+        // if (!$insertDisc->execute()){
+        //     $error_message = "Erreur lors de l'insertion dans la base de données.";            
+            // Arrêtez l'exécution du script après la redirection
+            // exit(); 
+        // } else {
+            // $id = $db->lastInsertId();
+            // Redirigez ici après l'insertion réussie
+            // header("Location: index.php?added=true");
+            header("Location: index.php");
+
+            //Arrêtez l'exécution du script après la redirection
+            exit(); 
+
+        };
+
+        // $insertDisc->execute([
+        // 'title' => $title,
+        // 'disc_year' => $year,
+        // 'genre' => $genre,
+        // 'label' => $label
+        // ]);
+
     }
-      // Je redirige vers le formulaire de connexion
-      header("Location: index.php");
-}
+// }
 ?>

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Formulaire d'ajout</title>
+  <title>Formulaire de modification</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 
@@ -32,8 +32,8 @@
         </div>
         <div class="col-md-6 mb-4">
 
-          <label for="artist" class="form-label">Disabled select menu</label>
-          <select  name="artist" class="form-select">
+          <label for="Artist" class="form-label">Disabled select menu</label>
+          <select id="disabledSelect" name="artist_id" class="form-select">
           <?php  
                     // Parcourez le tableau des artistes pour générer les options
 
@@ -58,8 +58,8 @@
           <input type="text" name="label" class="form-control" placeholder="Enter label(EMI,WARNER...)">
         </div>
         <div class="col-md-6 mb-4">
-          <label for="price" class="form-label">Price</label>
-          <input type="int" name="price" class="form-control" placeholder=>
+          <label for="price" class="form-label"></label>
+          <input type="int" name="price" class="form-control" placeholder="Enter price">
         </div>
         <!-- choisir un fichier -->
         <input class="btn btn-primary" type="submit" value="Ajouter">

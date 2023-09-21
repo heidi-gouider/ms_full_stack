@@ -17,6 +17,9 @@
     //connexion à la base de donnée
     require_once('db_conect.php');
 
+    // if (isset($_GET["added"]) && $_GET["added"] === "true") {
+        // echo "Les données ajoutées devraient être affichées ici.";
+
     //j'utilise la méthode query de l'objet pdo pour exécuter la requete sql
     // $requete = $db->query("SELECT * FROM disc");
     $requete = $db->query("SELECT disc.*, artist.artist_name FROM artist INNER JOIN disc ON artist.artist_id = disc.artist_id;");
@@ -28,28 +31,17 @@
 
     //Cette ligne ferme le curseur de la requête. Cela libère les ressources associées à la requête et permet de faire d'autres requêtes avec la même connexion PDO.
     $requete->closeCursor();
-
+    // Ajoutez un message de débogage pour vérifier les données
+// echo "Données récupérées : " . print_r($tableau, true);
+    // }
     // $compte = $db->query("SELECT COUNT (*) FROM disc ");
     // $result = $compte->fetchColumn();
     // $compte->closeCursor();
     // echo "Liste des disques : " . $result;
 
-    // Divisez la liste en deux parties (vous pouvez ajuster la logique selon vos besoins)
-    // $moitie = count($tableau) / 2;
-    // $premiereMoitie = array_slice($tableau, 0, $moitie);
-    // $deuxiemeMoitie = array_slice($tableau, $moitie);
-    // $requete = $db->prepare("select * from disc where disc_id=?");
-    // $requete = $db->prepare("SELECT artist_name FROM artist INNER JOIN disc ON artist.artist_id = disc.artist_id;");
-    // je définie la valeur du paramètre en utilisant son nom
-    // $requete = bindValue()
-    // $requete->execute();
-    // $artist = $requete->fetch(PDO::FETCH_OBJ);
-    //$requete->closeCursor();
-
 
     // Afficher le nombre de disques
     $count = 0; // Utilisez une variable pour suivre le nombre de disques affichés
-
     ?>
     <h1><?php echo "Liste des disques : "  . $count ?></h1>
     <a href="add_form.php" class="btn btn-primary float-end">Ajouter</a>
