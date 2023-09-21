@@ -1,73 +1,73 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Titre de la page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Formulaire d'ajout</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
+
 <body>
-    <?php
-// Active l'affichage des erreurs dans le navigateur
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-//connexion à la base de donnée
-require_once('db_conect.php');
+  <?php
+  // Active l'affichage des erreurs dans le navigateur
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  error_reporting(E_ALL);
+  //connexion à la base de donnée
+  require_once('db_conect.php');
 
-$requete = $db->query("SELECT artist.* FROM artist");
-$tableau = $requete->fetchAll(PDO::FETCH_OBJ);
-$requete->closeCursor();
+  $requete = $db->query("SELECT artist.* FROM artist");
+  $tableau = $requete->fetchAll(PDO::FETCH_OBJ);
+  $requete->closeCursor();
 
-?>
+  ?>
 
-<form>
-  <fieldset>
-    <legend>Ajouter un vinyle</legend>
-    <div class="mb-3">
-      <label for="Title" class="form-label">Title</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="Enter title">
-    </div>
-    <div class="mb-3">
+  <div class="container mx-auto" id="formulaire">
+    <form action="add_script.php" method="post" id="valid" novalidate>
+      <fieldset>
+        <legend>Ajouter un vinyle</legend>
+        <div class="col-md-6 mb-4">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" name="title" class="form-control" placeholder="Enter title">
+        </div>
+        <div class="col-md-6 mb-4">
 
-      <label for="Artist" class="form-label">Disabled select menu</label>
-      <select id="disabledSelect" name="artist_id" class="form-select">
-  <!--
-        // echo '<option value="' .$artist->arrtist_name'"> .'</option>';
-        // echo '<select name="nom_artiste">';
+          <label for="Artist" class="form-label">Disabled select menu</label>
+          <select id="disabledSelect" name="artist_id" class="form-select">
+          <?php  
+                    // Parcourez le tableau des artistes pour générer les options
 
-// Parcourez le tableau d'artistes pour créer des options
-// foreach ($tableau as $artist) {
-    // Utilisez la valeur de chaque élément du tableau pour remplir la balise <option>
-    // echo '<option value="' . .$artist->arrtist_name' .$artist->arrtist_name' '">' . .$artist->arrtist_name' . '</option>';
-// }
+    foreach ($tableau as $artist) {
+        echo '<option value="' . $artist->artist_id . '">' . $artist->artist_name . '</option>';
+    }
+    ?>
 
-// Fermez la balise de sélection
-// echo '</select>';
--->  
-      </select>
+          </select>
 
-    </div>
-    <div class="mb-3">
-      <label for="Year" class="form-label">year</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="Enter year">
-    </div>
-    <div class="mb-3">
-      <label for="Genre" class="form-label">genre</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="Enter genre(Rock,Prog...)">
-    </div>
-    <div class="mb-3">
-      <label for="Label" class="form-label">label</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="Enter label(EMI,WARNER...)">
-    </div>
-    <div class="mb-3">
-      <label for="Price" class="form-label"></label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder=>
-    </div>
-<!-- choisir un fichier -->
-    <input class="btn btn-primary" type="button" value="Ajouter">
-    <a class="btn btn-primary" href="index.php" role="button">Retour</a>
-  </fieldset>
-</form>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        </div>
+        <div class="col-md-6 mb-4">
+          <label for="year" class="form-label">year</label>
+          <input type="text" name="year" class="form-control" placeholder="Enter year">
+        </div>
+        <div class="col-md-6 mb-4">
+          <label for="genre" class="form-label">genre</label>
+          <input type="text" name="genre" class="form-control" placeholder="Enter genre(Rock,Prog...)">
+        </div>
+        <div class="col-md-6 mb-4">
+          <label for="label" class="form-label">label</label>
+          <input type="text" name="label" class="form-control" placeholder="Enter label(EMI,WARNER...)">
+        </div>
+        <div class="col-md-6 mb-4">
+          <label for="price" class="form-label"></label>
+          <input type="text" name="price" class="form-control" placeholder=>
+        </div>
+        <!-- choisir un fichier -->
+        <input class="btn btn-primary" type="submit" value="Ajouter">
+        <a class="btn btn-primary" href="index.php" role="button">Retour</a>
+      </fieldset>
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
+
 </html>
