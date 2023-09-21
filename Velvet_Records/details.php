@@ -31,31 +31,31 @@ $requete = $db->prepare("select * from disc where disc_id=?");
 
     <div class="col-mb-6">
       <label for="Title" class="form-label">Title</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->disc_title ?>">
+      <input type="text" id="disabledTextInput" class="form-control" value="<?= $disc->disc_title?>" disabled>
     <!-- </div> -->
     <!-- <div class="col-mb-6"> -->
       <label for="Year" class="form-label">year</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->disc_year ?>">
+      <input type="text" id="disabledTextInput" class="form-control" value="<?= $disc->disc_year ?>"disabled>
     <!-- </div> -->
     <!-- <div class="mb-3"> -->
       <label for="Label" class="form-label">label</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->disc_label ?>">
+      <input type="text" id="disabledTextInput" class="form-control" value="<?= $disc->disc_label ?>"disabled>
     </div>
 
     <div class="col-mb-6">
     <label for="Artist" class="form-label">artist</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->artist_name_ ?>">
+      <input type="text" id="disabledTextInput" class="form-control" value="<?= $disc->artist_name_ ?>"disabled>
 
       <label for="Genre" class="form-label">genre</label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->disc_genre ?>">
+      <input type="text" id="disabledTextInput" class="form-control" value="<?= $disc->disc_genre ?>"disabled>
     <!-- </div> -->
     <!-- <div class="mb-3"> -->
       <label for="Price" class="form-label"></label>
-      <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->disc_price ?>">
+      <input type="text" id="disabledTextInput" class="form-control" placeholder="<?= $disc->disc_price ?>"disabled>
       <img src="ASSETS/<?= $disc->disc_picture ?>" alt="<?= $disc->disc_title ?>">
 
     <!-- </div> -->
-    <a class="btn btn-primary" href="#">Modifier</a>
+    <a href="update_form.php?disc_id=<?= $disc->disc_id ?>" class="btn btn-primary">Modifier</a>
     <a class="btn btn-primary" href="#">Supprimer</a>
     <input type="submit" class="btn btn-primary" name="retour" value="Retour">
  <!-- </fieldset> -->

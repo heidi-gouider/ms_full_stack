@@ -19,10 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 2. des fonctions php comme => filter_var (voir doc php : types de filtres => filtres de validation)
     //vérifier le formulaire
 
-    $requete = $db->query("SELECT artist.* FROM artist");
-    $tableau = $requete->fetchAll(PDO::FETCH_OBJ);
-    $requete->closeCursor();
-  
     if (
         isset($_POST["title"], $_POST["artist"] ,$_POST["annee"], $_POST["genre"], $_POST["label"], $_POST["price"])
         

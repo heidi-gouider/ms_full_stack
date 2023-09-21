@@ -20,15 +20,25 @@
   $tableau = $requete->fetchAll(PDO::FETCH_OBJ);
   $requete->closeCursor();
 
+  $requete = $db->prepare("select * from disc where disc_id=?");    
+  // $requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
+      $requete->execute(array($_GET["disc_id"]));
+      $disc = $requete->fetch(PDO::FETCH_OBJ);
+  
+      if (isset($_POST['retour'])) {
+          header("Location: index.php");
+          exit;
+      }
+  
   ?>
 
   <div class="container mx-auto" id="formulaire">
-    <form action="add_script.php" method="post" id="valid" novalidate>
+    <form action="update_script.php" method="post" id="valid" novalidate>
       <fieldset>
-        <legend>Ajouter un vinyle</legend>
+        <legend>Modifier un vinyle</legend>
         <div class="col-md-6 mb-4">
           <label for="title" class="form-label">Title</label>
-          <input type="text" name="title" class="form-control" placeholder="Enter title">
+          <input type="text" name="title" class="form-control" placeholder="<?= $disc->disc_title?>">
         </div>
         <div class="col-md-6 mb-4">
 
@@ -46,23 +56,23 @@
 
         </div>
         <div class="col-md-6 mb-4">
-          <label for="year" class="form-label">year</label>
-          <input type="text" name="year" class="form-control" placeholder="Enter year">
+          <label for="annee" class="form-label">year</label>
+          <input type="text" name="annee" class="form-control" placeholder="<?= $disc->disc_year?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="genre" class="form-label">genre</label>
-          <input type="text" name="genre" class="form-control" placeholder="Enter genre(Rock,Prog...)">
+          <input type="text" name="genre" class="form-control" placeholder="<?= $disc->disc_genre?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="label" class="form-label">label</label>
-          <input type="text" name="label" class="form-control" placeholder="Enter label(EMI,WARNER...)">
+          <input type="text" name="label" class="form-control" placeholder="<?= $disc->disc_label?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="price" class="form-label"></label>
-          <input type="int" name="price" class="form-control" placeholder="Enter price">
+          <input type="int" name="price" class="form-control" placeholder="<?= $disc->disc_price?>">
         </div>
         <!-- choisir un fichier -->
-        <input class="btn btn-primary" type="submit" value="Ajouter">
+        <input class="btn btn-primary" type="submit" value="Modifier">
         <a class="btn btn-primary" href="index.php" role="button">Retour</a>
       </fieldset>
     </form>
