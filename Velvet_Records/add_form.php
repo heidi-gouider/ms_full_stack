@@ -46,8 +46,8 @@
 
         </div>
         <div class="col-md-6 mb-4">
-          <label for="year" class="form-label">year</label>
-          <input type="text" name="year" class="form-control" placeholder="Enter year">
+          <label for="annee" class="form-label">year</label>
+          <input type="text" name="annee" class="form-control" placeholder="Enter year">
         </div>
         <div class="col-md-6 mb-4">
           <label for="genre" class="form-label">genre</label>
@@ -59,7 +59,7 @@
         </div>
         <div class="col-md-6 mb-4">
           <label for="price" class="form-label">Price</label>
-          <input type="int" name="price" class="form-control" placeholder=>
+          <input type="number" name="price" class="form-control" placeholder=>
         </div>
         <!-- choisir un fichier -->
         <input class="btn btn-primary" type="submit" value="Ajouter">
