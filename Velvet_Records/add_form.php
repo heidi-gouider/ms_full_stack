@@ -23,7 +23,7 @@
   ?>
 
   <div class="container mx-auto" id="formulaire">
-    <form action="add_script.php" method="post" id="valid" novalidate>
+    <form action="add_script.php" method="post" id="valid" novalidate enctype="multipart/form-data">
       <fieldset>
         <legend>Ajouter un vinyle</legend>
         <div class="col-md-6 mb-4">
@@ -33,14 +33,14 @@
         <div class="col-md-6 mb-4">
 
           <label for="artist" class="form-label">Disabled select menu</label>
-          <select  name="artist" class="form-select">
-          <?php  
-                    // Parcourez le tableau des artistes pour générer les options
+          <select name="artist" class="form-select">
+            <?php
+            // Parcourez le tableau des artistes pour générer les options
 
-    foreach ($tableau as $artist) {
-        echo '<option value="' . $artist->artist_id . '">' . $artist->artist_name . '</option>';
-    }
-    ?>
+            foreach ($tableau as $artist) {
+              echo '<option value="' . $artist->artist_id . '">' . $artist->artist_name . '</option>';
+            }
+            ?>
 
           </select>
 
@@ -62,6 +62,10 @@
           <input type="number" name="price" class="form-control" placeholder=>
         </div>
         <!-- choisir un fichier -->
+        <label for="piscture">picture</label>
+        <div class="col-md-6 mb-4 mt-4">
+          <input type="file" name="piscture" accept="image/png, image/jpeg" />
+        </div>
         <input class="btn btn-primary" type="submit" value="Ajouter">
         <a class="btn btn-primary" href="index.php" role="button">Retour</a>
       </fieldset>

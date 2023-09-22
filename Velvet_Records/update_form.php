@@ -24,12 +24,7 @@
   // $requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
       $requete->execute(array($_GET["disc_id"]));
       $disc = $requete->fetch(PDO::FETCH_OBJ);
-  
-      if (isset($_POST['retour'])) {
-          header("Location: index.php");
-          exit;
-      }
-  
+    
   ?>
 
   <div class="container mx-auto" id="formulaire">
@@ -38,7 +33,7 @@
         <legend>Modifier un vinyle</legend>
         <div class="col-md-6 mb-4">
           <label for="title" class="form-label">Title</label>
-          <input type="text" name="title" class="form-control" placeholder="<?= $disc->disc_title?>">
+          <input type="text" name="title" class="form-control" value="<?= $disc->disc_title?>">
         </div>
         <div class="col-md-6 mb-4">
 
@@ -57,22 +52,23 @@
         </div>
         <div class="col-md-6 mb-4">
           <label for="annee" class="form-label">year</label>
-          <input type="text" name="annee" class="form-control" placeholder="<?= $disc->disc_year?>">
+          <input type="text" name="annee" class="form-control" value="<?= $disc->disc_year?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="genre" class="form-label">genre</label>
-          <input type="text" name="genre" class="form-control" placeholder="<?= $disc->disc_genre?>">
+          <input type="text" name="genre" class="form-control" value="<?= $disc->disc_genre?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="label" class="form-label">label</label>
-          <input type="text" name="label" class="form-control" placeholder="<?= $disc->disc_label?>">
+          <input type="text" name="label" class="form-control" value="<?= $disc->disc_label?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="price" class="form-label"></label>
-          <input type="int" name="price" class="form-control" placeholder="<?= $disc->disc_price?>">
+          <input type="int" name="price" class="form-control" value="<?= $disc->disc_price?>">
         </div>
-        <!-- choisir un fichier -->
-        <input class="btn btn-primary" type="submit" value="Modifier">
+        <!-- //voir pour utilisation de l'input caché -->
+        <input type="hidden" name="disc_id" value="<?= $disc->disc_id ?>">
+        <input class="btn btn-primary" type="submit" value="Enregistrer">
         <a class="btn btn-primary" href="index.php" role="button">Retour</a>
       </fieldset>
     </form>
