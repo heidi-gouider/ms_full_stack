@@ -1,11 +1,14 @@
 <!-- je récupère les données saisies par l'utilisateur
 j'enregistre les données dans la bdd-->
 <?php
+//je démare la session
+// session_start();
+
 // Active l'affichage des erreurs dans le navigateur
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-//connexion à la base de donnée
+// inclusion de la page de connexion à la base de donnée
 require_once('db_conect.php');
 
 
@@ -20,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //vérifier le formulaire
 
     if (
-        isset($_POST["title"], $_POST["artist"] ,$_POST["annee"], $_POST["genre"], $_POST["label"], $_POST["price"])
-        
+        isset($_POST["title"], $_POST["artist"], $_POST["annee"], $_POST["genre"], $_POST["label"], $_POST["price"])
+
     ) {
         //je récupère les données saisies
         $title = $_POST["title"];
@@ -31,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $label = $_POST["label"];
         $price = $_POST["price"];
 
+        //je veut ajouter un disc dans ma base de donnée
         $sql = "INSERT INTO disc (disc_title, artist_id, disc_year, disc_genre, disc_label, disc_price)
         VALUES (:title, :artist, :annee, :genre, :label, :price)";
 
@@ -46,38 +50,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // $insertDisc->bindValue(":price", $price, PDO::PARAM_INT);
 
         $insertDisc->execute([
-        'title' => $title,
-        'artist' => $artist,
-        'annee' => $year,
-        'genre' => $genre,
-        'label' => $label,
-        'price' => $price
+            'title' => $title,
+            'artist' => $artist,
+            'annee' => $year,
+            'genre' => $genre,
+            'label' => $label,
+            'price' => $price
         ]);
 
-        
+
 
         // if (!$insertDisc->execute()){
         //     $error_message = "Erreur lors de l'insertion dans la base de données.";            
-            // Arrêtez l'exécution du script après la redirection
-            // exit(); 
+        // Arrêtez l'exécution du script après la redirection
+        // exit(); 
         // } else {
-            // $id = $db->lastInsertId();
-            // Redirigez ici après l'insertion réussie
-            // header("Location: index.php?added=true");
-            header("Location: index.php");
+        // $id = $db->lastInsertId();
+        // Redirigez ici après l'insertion réussie
+        // header("Location: index.php?added=true");
+        header("Location: index.php");
 
-            //Arrêtez l'exécution du script après la redirection
-            exit(); 
+        //Arrêtez l'exécution du script après la redirection
+        exit();
+    };
 
-        };
+    // $insertDisc->execute([
+    // 'title' => $title,
+    // 'disc_year' => $year,
+    // 'genre' => $genre,
+    // 'label' => $label
+    // ]);
 
-        // $insertDisc->execute([
-        // 'title' => $title,
-        // 'disc_year' => $year,
-        // 'genre' => $genre,
-        // 'label' => $label
-        // ]);
-
-    }
+}
 // }
 ?>

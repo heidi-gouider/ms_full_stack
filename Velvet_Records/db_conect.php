@@ -18,6 +18,16 @@ try {
     // la ligne ci-dessus permet d'indiquer à PDO de générer une exception à chaque fois qu'un problème est rencontré.
     //Très pratique en mode développement, mais déconseillé en mode production.
 
+    //pour enregistrer les données en utf8 et s'assurer de la prise des accents et autres caratères ...
+    //$db->exec("SET NAMES UTF8");
+
+} catch (Exception $e) {
+    // En cas d'erreur, afficher un message d'erreur et le numéro d'erreur, puis arrêter le script
+    echo "Erreur : " . $e->getMessage() . "<br>";
+    echo "N° : " . $e->getCode();
+    die("Fin du script");
+}
+
     //je vais modifier la structure de la table disc avec l'instruction ALTER TABLE pour y insérer des images
     //je n'utilise pas de requetes préparées car aucun utilisateur ne pourra changer la structure d'une table
     // $sql = "ALTER TABLE disc MODIFY COLUMN disc_picture BLOB";
@@ -59,10 +69,3 @@ try {
     //     $stmt->bindParam(':pictureDirectory', $pictureDirectory, PDO::PARAM_STR);
     // $stmt->bindParam(':prefix', $prefix, PDO::PARAM_STR);
     //     $stmt->execute();
-
-} catch (Exception $e) {
-    // En cas d'erreur, afficher un message d'erreur et le numéro d'erreur, puis arrêter le script
-    echo "Erreur : " . $e->getMessage() . "<br>";
-    echo "N° : " . $e->getCode();
-    die("Fin du script");
-}
