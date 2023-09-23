@@ -20,11 +20,11 @@
   $tableau = $requete->fetchAll(PDO::FETCH_OBJ);
   $requete->closeCursor();
 
-  $requete = $db->prepare("select * from disc where disc_id=?");    
+  $requete = $db->prepare("select * from disc where disc_id=?");
   // $requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
-      $requete->execute(array($_GET["disc_id"]));
-      $disc = $requete->fetch(PDO::FETCH_OBJ);
-    
+  $requete->execute(array($_GET["disc_id"]));
+  $disc = $requete->fetch(PDO::FETCH_OBJ);
+
   ?>
 
   <div class="container mx-auto" id="formulaire">
@@ -33,40 +33,40 @@
         <legend>Modifier un vinyle</legend>
         <div class="col-md-6 mb-4">
           <label for="title" class="form-label">Title</label>
-          <input type="text" name="title" class="form-control" value="<?= $disc->disc_title?>">
+          <input type="text" name="title" class="form-control" value="<?= $disc->disc_title ?>">
         </div>
         <div class="col-md-6 mb-4">
 
           <label for="Artist" class="form-label">Disabled select menu</label>
           <select id="disabledSelect" name="artist_id" class="form-select">
-          <?php  
-                    // Parcourez le tableau des artistes pour générer les options
+            <?php
+            // Parcourez le tableau des artistes pour générer les options
 
-    foreach ($tableau as $artist) {
-        echo '<option value="' . $artist->artist_id . '">' . $artist->artist_name . '</option>';
-    }
-    ?>
+            foreach ($tableau as $artist) {
+              echo '<option value="' . $artist->artist_id . '">' . $artist->artist_name . '</option>';
+            }
+            ?>
 
           </select>
 
         </div>
         <div class="col-md-6 mb-4">
           <label for="annee" class="form-label">year</label>
-          <input type="text" name="annee" class="form-control" value="<?= $disc->disc_year?>">
+          <input type="text" name="annee" class="form-control" value="<?= $disc->disc_year ?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="genre" class="form-label">genre</label>
-          <input type="text" name="genre" class="form-control" value="<?= $disc->disc_genre?>">
+          <input type="text" name="genre" class="form-control" value="<?= $disc->disc_genre ?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="label" class="form-label">label</label>
-          <input type="text" name="label" class="form-control" value="<?= $disc->disc_label?>">
+          <input type="text" name="disc_label" class="form-control" value="<?= $disc->disc_label ?>">
         </div>
         <div class="col-md-6 mb-4">
           <label for="price" class="form-label"></label>
-          <input type="int" name="price" class="form-control" value="<?= $disc->disc_price?>">
+          <input type="int" name="price" class="form-control" value="<?= $disc->disc_price ?>">
         </div>
-        <!-- //voir pour utilisation de l'input caché -->
+        <!-- //voir pour utilisation de l'input caché pour envoyer l'id du disc dans le post pour faire la query -->
         <input type="hidden" name="disc_id" value="<?= $disc->disc_id ?>">
         <input class="btn btn-primary" type="submit" value="Enregistrer">
         <a class="btn btn-primary" href="index.php" role="button">Retour</a>

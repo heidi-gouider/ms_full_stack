@@ -9,6 +9,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//connexion à la base de donnée
+require_once('db_conect.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -16,8 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // if (!empty($_POST)) {
     // var_dump($_POST);
 
-    //connexion à la base de donnée
-    require_once('db_conect.php');
 
     //pour vérifier la validité du format d'entrée je peux :
     // 1. utiliser des regex
@@ -25,31 +25,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //vérifier si des données sont postées dans le formulaire
     if (
-        isset($_POST["title"], $_POST["artist_id"], $_POST["year"], $_POST["genre"], $_POST["label"], $_POST["price"], $_POST["disc_id"])
+        isset($_POST["disc_id"], $_POST["title"], $_POST["artist_id"], $_POST["year"], $_POST["genre"], $_POST["label"], $_POST["price"])
 
     ) {
         //je nettoie les données envoyée avec strip_tags = à voir!!!!
-        //$title = strip_tags($_POST["title"]);
-        //$artist = strip_tags($_POST["artist"]);
-        //$year = strip_tags($_POST["annee"]);
-        //$genre = strip_tags($_POST["genre"]);
-        //$label = strip_tags($_POST["label"]);
-        //$price = strip_tags($_POST["price"]);
-        //$disc_id = strip_tags($_POST["disc_id"]);
+        $disc_id = strip_tags($_POST["disc_id"]);
+        $title = strip_tags($_POST["title"]);
+        $artist = strip_tags($_POST["artist"]);
+        $year = strip_tags($_POST["annee"]);
+        $genre = strip_tags($_POST["genre"]);
+        $label = strip_tags($_POST["label"]);
+        $price = strip_tags($_POST["price"]);
 
-
-        //je récupère les données saisies
-        $title = $_POST["title"];
-        $artist = $_POST["artist"];
-        $year = $_POST["annee"];
-        $genre = $_POST["genre"];
-        $label = $_POST["label"];
-        $price = $_POST["price"];
-        $disc_id = $_POST["disc_id"];
 
         //requete de modification des données
-        $sql = "UPDATE disc SET disc_title = :title, artist_id = :artist, disc_year = :annee, disc_genre = :genre, disc_label = :label, disc_price = :price
-        WHERE disc_id = :disc_id";
+        $sql = "UPDATE disc SET disc_title=:title, artist_id=:artist, disc_year=:annee, disc_genre=:genre, disc_label=:disc_label, disc_price=:price
+        WHERE disc_id=:disc_id";
 
         // $insertDisc = $db->prepare('INSERT INTO disc (disc_title,disc_year, disc_genre, disc_label)
         // VALUES (:title, :disc_year, :genre, :label)' );
@@ -58,16 +49,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $modifDisc = $db->prepare($sql);
 
         // Je relie les valeurs individuellement aux paramètres de la requête
+        //inclure l'ID du disque à mettre à jour
+        $modifDisc->bindValue(":disc_id", $_POST["disc_id"], PDO::PARAM_INT);
         $modifDisc->bindValue(":title", $title, PDO::PARAM_STR);
         $modifDisc->bindValue(":artist", $artist, PDO::PARAM_INT);
         $modifDisc->bindValue(":annee", $year, PDO::PARAM_INT);
         $modifDisc->bindValue(":genre", $genre, PDO::PARAM_STR);
         $modifDisc->bindValue(":label", $label, PDO::PARAM_STR);
         $modifDisc->bindValue(":price", $price, PDO::PARAM_INT);
-        //inclure l'ID du disque à mettre à jour
-        $modifDisc->bindValue(":disc_id", $_POST["disc_id"], PDO::PARAM_INT);
 
         $verifquery = $modifDisc->execute();
+
+        //je récupère les données saisies
+        $disc_id = $_POST["disc_id"];
+        $title = $_POST["title"];
+        $artist = $_POST["artist"];
+        $year = $_POST["annee"];
+        $genre = $_POST["genre"];
+        $label = $_POST["label"];
+        $price = $_POST["price"];
 
         // $modifDisc->execute([
         //je définie un tableau associatif , les clés sont les paramètres et je leur assigne des valeurs
@@ -80,10 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // ]);
 
         //j'execute la requete
-        if ($verifquery) {
-            //Redirigez ici après l'insertion réussie
-            header("Location:index.php");
-        }
+        //if ($verifquery) {
+        //Redirigez ici après l'insertion réussie
+        header("Location:index.php");
+        // }
 
         // if (!$modifDisc->execute()){
         //     die("Erreur lors de la mise à jour dans la base de données.");           
