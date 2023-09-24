@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //vérifier si le form a été envoyé
     // if (!empty($_POST)) {
     // var_dump($_POST);
+    //require_once('db_conect.php');
 
 
     //pour vérifier la validité du format d'entrée je peux :
@@ -25,17 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //vérifier si des données sont postées dans le formulaire
     if (
-        isset($_POST["disc_id"], $_POST["title"], $_POST["artist_id"], $_POST["year"], $_POST["genre"], $_POST["label"], $_POST["price"])
+        isset($_POST["disc_id"], $_POST["title"], $_POST["artist"], $_POST["year"], $_POST["genre"], $_POST["label"], $_POST["price"])
 
     ) {
         //je nettoie les données envoyée avec strip_tags = à voir!!!!
-        $disc_id = strip_tags($_POST["disc_id"]);
-        $title = strip_tags($_POST["title"]);
-        $artist = strip_tags($_POST["artist"]);
-        $year = strip_tags($_POST["annee"]);
-        $genre = strip_tags($_POST["genre"]);
-        $label = strip_tags($_POST["label"]);
-        $price = strip_tags($_POST["price"]);
+        // $disc_id = strip_tags($_POST["disc_id"]);
+        //$title = strip_tags($_POST["title"]);
+        //$artist = strip_tags($_POST["artist"]);
+        //$year = strip_tags($_POST["annee"]);
+        //$genre = strip_tags($_POST["genre"]);
+        //$label = strip_tags($_POST["label"]);
+        //$price = strip_tags($_POST["price"]);
 
 
         //requete de modification des données
@@ -50,15 +51,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Je relie les valeurs individuellement aux paramètres de la requête
         //inclure l'ID du disque à mettre à jour
-        $modifDisc->bindValue(":disc_id", $_POST["disc_id"], PDO::PARAM_INT);
-        $modifDisc->bindValue(":title", $title, PDO::PARAM_STR);
-        $modifDisc->bindValue(":artist", $artist, PDO::PARAM_INT);
-        $modifDisc->bindValue(":annee", $year, PDO::PARAM_INT);
-        $modifDisc->bindValue(":genre", $genre, PDO::PARAM_STR);
-        $modifDisc->bindValue(":label", $label, PDO::PARAM_STR);
-        $modifDisc->bindValue(":price", $price, PDO::PARAM_INT);
+        //verif si bindValue ou bindParam
+        $modifDisc->bindParam(":disc_id", $_POST["disc_id"], PDO::PARAM_INT);
+        $modifDisc->bindParam(":title", $title, PDO::PARAM_STR);
+        $modifDisc->bindParam(":artist", $artist, PDO::PARAM_INT);
+        $modifDisc->bindParam(":annee", $year, PDO::PARAM_INT);
+        $modifDisc->bindParam(":genre", $genre, PDO::PARAM_STR);
+        $modifDisc->bindParam(":disc_label", $label, PDO::PARAM_STR);
+        $modifDisc->bindParam(":price", $price, PDO::PARAM_STR);
 
-        $verifquery = $modifDisc->execute();
 
         //je récupère les données saisies
         $disc_id = $_POST["disc_id"];
@@ -66,29 +67,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $artist = $_POST["artist"];
         $year = $_POST["annee"];
         $genre = $_POST["genre"];
-        $label = $_POST["label"];
+        $label = $_POST["disc_label"];
         $price = $_POST["price"];
 
-        // $modifDisc->execute([
-        //je définie un tableau associatif , les clés sont les paramètres et je leur assigne des valeurs
-        // 'title' => $title,
-        // 'artist' => $artist,
-        // 'annee' => $year,
-        // 'genre' => $genre,
-        // 'label' => $label,
-        // 'price' => $price
-        // ]);
+        //$modifDisc->execute();
+        // try {
+        //     $modifDisc->execute([
+        //         'disc_id' => $disc_id,
+        //         'title' => $title,
+        //         'artist' => $artist,
+        //         'annee' => $year,
+        //         'genre' => $genre,
+        //         'disc_label' => $label,
+        //         'price' => $price
+        //     ]);
+        //     header("Location: index.php?disc_id=" . $disc_id);
+        //     exit();
+        // } catch (PDOException $e) {
+        //     echo "Erreur SQL : " . $e->getMessage();
+        // }
+
+        $modifDisc->execute([
+            //je définie un tableau associatif , les clés sont les paramètres et je leur assigne des valeurs
+            'disc_id' => $disc_id,
+            'title' => $title,
+            'artist' => $artist,
+            'annee' => $year,
+            'genre' => $genre,
+            'disc_label' => $label,
+            'price' => $price
+        ]);
 
         //j'execute la requete
         //if ($verifquery) {
         //Redirigez ici après l'insertion réussie
-        header("Location:index.php");
+        // header("Location:index.php");
         // }
-
+        header("Location: index.php?disc_id=" . $disc_id);
+        exit();
         // if (!$modifDisc->execute()){
         //     die("Erreur lors de la mise à jour dans la base de données.");           
     } else {
-        // $_SESSION['error'] = "erreur";
+        //     // $_SESSION['error'] = "erreur";
         echo "echec";
     }
 }

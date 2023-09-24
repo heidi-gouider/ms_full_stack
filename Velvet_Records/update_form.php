@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-6 mb-4">
           <label for="price" class="form-label"></label>
-          <input type="int" name="price" class="form-control" value="<?= $disc->disc_price ?>">
+          <input type="float" name="price" class="form-control" value="<?= $disc->disc_price ?>">
         </div>
         <!-- //voir pour utilisation de l'input caché pour envoyer l'id du disc dans le post pour faire la query -->
         <input type="hidden" name="disc_id" value="<?= $disc->disc_id ?>">
