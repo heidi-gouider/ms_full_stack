@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     //requete de modification des données
-    $sql = "UPDATE disc SET disc_title=:title, artist_id=:artist, disc_year=:annee, disc_genre=:genre, disc_label=:disc_label, disc_price=:price
+    $sql = "UPDATE disc SET disc_title=:title, disc_year=:annee, disc_genre=:genre, disc_label=:disc_label, disc_price=:price, artist_id=:artist
         WHERE disc_id=:disc_id";
 
     // $insertDisc = $db->prepare('INSERT INTO disc (disc_title,disc_year, disc_genre, disc_label)
@@ -55,21 +55,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //verif si bindValue ou bindParam
     $modifDisc->bindParam(":disc_id", $_POST["disc_id"], PDO::PARAM_INT);
     $modifDisc->bindParam(":title", $title, PDO::PARAM_STR);
-    $modifDisc->bindParam(":artist", $artist, PDO::PARAM_INT);
     $modifDisc->bindParam(":annee", $year, PDO::PARAM_INT);
     $modifDisc->bindParam(":genre", $genre, PDO::PARAM_STR);
     $modifDisc->bindParam(":disc_label", $label, PDO::PARAM_STR);
     $modifDisc->bindParam(":price", $price, PDO::PARAM_STR);
+    $modifDisc->bindParam(":artist", $artist, PDO::PARAM_INT);
 
 
     //je récupère les données saisies
     $disc_id = $_POST["disc_id"];
     $title = $_POST["title"];
-    $artist = $_POST["artist"];
     $year = $_POST["annee"];
     $genre = $_POST["genre"];
     $label = $_POST["disc_label"];
     $price = $_POST["price"];
+    $artist = $_POST["artist"]; // probleme id artist
+
 
     //$modifDisc->execute();
     // try {
@@ -88,16 +89,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //     echo "Erreur SQL : " . $e->getMessage();
     // }
 
-    $modifDisc->execute([
-        //je définie un tableau associatif , les clés sont les paramètres et je leur assigne des valeurs
-        'disc_id' => $disc_id,
-        'title' => $title,
-        'artist' => $artist,
-        'annee' => $year,
-        'genre' => $genre,
-        'disc_label' => $label,
-        'price' => $price
-    ]);
+    $modifDisc->execute();
+    //je définie un tableau associatif , les clés sont les paramètres et je leur assigne des valeurs
+    //     'disc_id' => $disc_id,
+    //     'title' => $title,
+    //     'artist' => $artist,
+    //     'annee' => $year,
+    //     'genre' => $genre,
+    //     'disc_label' => $label,
+    //     'price' => $price
+    // ]);
+
+    //!!!ça supprime le disc de l'index lien avec artist_id null
 
     //j'execute la requete
     //if ($verifquery) {

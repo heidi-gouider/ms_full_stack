@@ -12,8 +12,8 @@
   //je nettoie le disc_id envoyé avec strip_tags = à voir!!!!
 
 
-  $requete = $db->prepare("select * from disc where disc_id=?");
-  //$requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
+  // $requete = $db->prepare("select * from disc where disc_id=?");
+  $requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
   $requete->execute(array($_GET["disc_id"]));
   $disc = $requete->fetch(PDO::FETCH_OBJ);
 

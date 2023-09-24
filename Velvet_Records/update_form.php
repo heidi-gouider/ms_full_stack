@@ -20,8 +20,8 @@
   $tableau = $requete->fetchAll(PDO::FETCH_OBJ);
   $requete->closeCursor();
 
-  $requete = $db->prepare("select * from disc where disc_id=?");
-  // $requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
+  // $requete = $db->prepare("select * from disc where disc_id=?");
+  $requete = $db->prepare("select disc.*, artist.artist_name FROM disc INNER JOIN artist ON disc.artist_id = artist.artist_id WHERE disc_id=?");
   $requete->execute(array($_GET["disc_id"]));
   $disc = $requete->fetch(PDO::FETCH_OBJ);
 
@@ -45,6 +45,7 @@
             foreach ($tableau as $artist) {
               echo '<option value="' . $artist->artist_id . '">' . $artist->artist_name . '</option>';
             }
+            // endforeach;
             ?>
 
           </select>
@@ -68,7 +69,8 @@
         </div>
         <!-- //voir pour utilisation de l'input caché pour envoyer l'id du disc dans le post pour faire la query -->
         <input type="hidden" name="disc_id" value="<?= $disc->disc_id ?>">
-        <input class="btn btn-primary" type="submit" value="Enregistrer">
+        <button type="submit" class="btn btn-primary">enregistrer</button>
+        <!-- <input class="btn btn-primary" type="submit" value="Enregistrer"> -->
         <a class="btn btn-primary" href="index.php" role="button">Retour</a>
       </fieldset>
     </form>
