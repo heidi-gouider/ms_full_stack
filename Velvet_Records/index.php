@@ -1,4 +1,8 @@
 <?php
+// !!!! ATTENTION !!!! 
+////  NA JAMMAIS STOCKER LES FICHIERS (IMAGE) DANS LA BDD ET NE JAMMAIS METTRE LE CHEMIN DANS LA BDD
+       /// POUR CHAQUE IMAGE OU FICHIER METTRE UNIQUEMENT LE NOM /////
+
 //je démare la session
 // session_start();
 

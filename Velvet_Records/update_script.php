@@ -1,6 +1,9 @@
 <!-- je récupère les données saisies par l'utilisateur
 j'enregistre les données dans la bdd-->
 <?php
+// !!!! ATTENTION !!!! 
+////  LES UPLOADS SONT FORTEMENT DECONSEILLES AUX UTILISATEURS NON INSCRITS ET DONC NON IDENTIFIES /////
+
 //je démare la session
 // session_start();
 

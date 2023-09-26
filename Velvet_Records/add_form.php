@@ -23,6 +23,8 @@
   ?>
 
   <div class="container mx-auto" id="formulaire">
+    <!-- Je rajoute l'attribut enctype (encoding type) dans la balise form pour spécifier que le fichier envoyé sera binaire(image ou audio
+  les données seront envoyées sous forme de flux binaire-->
     <form action="add_script.php" method="post" id="valid" novalidate enctype="multipart/form-data">
       <fieldset>
         <legend>Ajouter un vinyle</legend>
