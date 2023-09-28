@@ -25,27 +25,36 @@
 
 
 // Configuration de l'attribut SameSite pour les cookies de session
-session_set_cookie_params([
+// session_set_cookie_params([
   // Ou 'Lax' ou 'Strict' selon vos besoins
-  'samesite' => 'None', 
+  // 'samesite' => 'None', 
   // Utilisez 'secure' uniquement si vous utilisez HTTPS
-  'secure' => true,     
-  'httponly' => true,
-]);
+//   'secure' => true,     
+//   'httponly' => true,
+// ]);
+
+// Active l'affichage des erreurs dans le navigateur
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+//connexion à la base de donnée
+require_once('db_connect.php');
+
 //j'active la session
 session_start();
 
 ?>
 <div class="error-message">
 <?php
-// Vérifier si un message d'erreur est présent dans la session
+// Vérifier s'il y a un message d'erreur
 if (isset($_SESSION['error_message'])) {
-    // Afficher le message d'erreur dans le formulaire
-    echo $_SESSION['error_message'];
-    // Effacer le message d'erreur de la session
-    // unset($_SESSION['error_message']);
+    echo '<p class="error">' . $_SESSION['error_message'] . '</p>';
+    // Effacer le message d'erreur
+    unset($_SESSION['error_message']);
 }
 ?>
+
 </div>
  <div class="container mx-auto" id="formulaire">
     <!-- <form action="<?php //echo $_SERVER["PHP_SELF"]; ?>" method="post" onsubmit="return valider(event)" id="valid"  novalidate> -->
@@ -55,7 +64,7 @@ if (isset($_SESSION['error_message'])) {
     <!-- class="validation row col-8 m-5 " -->
 <div class="col-md-6 mb-4">
     <label for="exampleInputEmail1" class="form-label">Email</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" name="mail" aria-describedby="emailHelp">
+    <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
     <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
   </div>
   <div class="col-md-6 mb-4">

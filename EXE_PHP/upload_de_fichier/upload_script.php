@@ -39,6 +39,7 @@ if(isset($_FILES["fichier"]) && $erreur === 0){
     "pdf" => "application/pdf",
  ];
  //Je vérifie l'extension et le type mime (avec pathinfo())
+ //!!Attention je vérifie le type mime dans le nom du fichier récupéré et non avec le type renvoyé par le navigateur
  $extention = pathinfo($nomFichier, PATHINFO_EXTENSION);
 
  //je vérifie si l'extension ou le type mine(format) sont présent ou non dans les clées => valeurs de $accept
@@ -46,11 +47,37 @@ if(isset($_FILES["fichier"]) && $erreur === 0){
     //si incorrect
     die("Erreur: format incorrect");
  }
- //je vérifie la taille
- if($tailleFichier > 50*1024*1024){
+ //je vérifie la taille ici (100 Ko)
+ if($tailleFichier > 100*1024){
     die("Taille du fichier tros grande");
  }
 }
+echo("Téléchargement réussi");
+
+// Je renomme et déplace le fichier avec la fonction move_upload_file()
+$upload_dir = 'EXE_PHP/upload_de_fichier/assets';
+move_uploaded_file($cheminTemporaire,"$upload_dir/upload_file");
+
+// deusieme script de vérification (a première vu plus sur)
+// On extrait le type du fichier via l'extension FILE_INFO 
+// $finfo = finfo_open(FILEINFO_MIME_TYPE);
+// $mimetype = finfo_file($finfo, $nomFichier);
+// finfo_close($finfo);
+
+// if (in_array($mimetype, $accept))
+// {
+    /* Le type est parmi ceux autorisés, donc OK, on va pouvoir 
+       déplacer et renommer le fichier */
+       // move_uploaded_file($cheminTemporaire,"assets");
+
+// } 
+// else 
+// {
+   // Le type n'est pas autorisé, donc ERREUR
+
+//    echo "Type de fichier non autorisé";    
+//    exit;
+// }    
 
 //je supprime le fichier téléchargé
 
