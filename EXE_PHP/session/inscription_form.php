@@ -6,7 +6,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 //connexion à la base de donnée
-require_once('db_connect.php');
+// require_once('db_connect.php');
 ?>
 
 

@@ -5,30 +5,32 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-//connexion à la base de donnée
-require_once('db_connect.php');
+        //connexion à la base de donnée
+        require('db_connect.php');
+
 
 // Configuration de l'attribut SameSite pour les cookies de session
-session_set_cookie_params([
-    // Ou 'Lax' ou 'Strict' selon vos besoins
-    'samesite' => 'None',
-    // Utilisez 'secure' uniquement si vous utilisez HTTPS
-    'secure' => true,
-    'httponly' => true,
-]);
+// session_set_cookie_params([
+// Ou 'Lax' ou 'Strict' selon vos besoins
+// 'samesite' => 'None',
+// Utilisez 'secure' uniquement si vous utilisez HTTPS
+//     'secure' => true,
+//     'httponly' => true,
+// ]);
+
 //j'active la session
 // session_start();
 
 $nom = $_POST["nom"];
 $prenom = $_POST["prenom"];
 $email = $_POST["email"];
-$passwowrd = $_POST["password"];
+$password = $_POST["password"];
 
 if (!empty($_POST)) {
     //Je vérifie que tous les champs du form sont remplis
     if (
-        isset($nom, $prenom, $email, $passwowrd)
-        && !empty($email) && !empty($passwowrd) && !empty($nom) && !empty($prenom)
+        isset($nom, $prenom, $email, $password)
+        && !empty($email) && !empty($password) && !empty($nom) && !empty($prenom)
     ) {
         //Je récupère les données et les protège
         //Je nettoie les données entrées par l'utilisateur, je supprime toutes les balises html
@@ -39,40 +41,65 @@ if (!empty($_POST)) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             die("Le format pour l'email est incorrect");
         }
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $password_hash = password_hash($passwowrd, PASSWORD_DEFAULT);
 
-            // elements à afficher
-    $datas = $_POST;
+        $sql = "INSERT INTO user (id, nom, prenom, email, mot_de_passe)
+VALUES (:id, :nom, :prenom, :email, :mot_de_passe)";
 
-    // Ajout de la date (heure d'envoi) aux données
-    $datas['timestamp'] = date('Y-m-d H:i:s');
+        // Préparation de la requête SQL
+        $stmt = $db->prepare($sql);
 
-    // Je stocke le chemin du fichier vers lequel les données récupérés vont être affiché dans une variables
-    $cheminTarget = "data_user.txt";
+        // Liaison des valeurs
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $stmt->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':mot_de_passe', $password_hash, PDO::PARAM_STR);
 
-    // La fonction fopen() = file open > permet d'ouvrir un fichier
-    // les paramètres de cette fonction sont (nom du fichier à ouvrir, mode d'ouverture du dit fichier)"a"=append
-    $fp = fopen($cheminTarget, "a");
-
-    // Parcours des données et écriture dans le fichier txt
-    // foreach ($REQUEST as $data=>$valeur){
-    foreach ($datas as $champ => $valeur) {
-        fwrite($fp, $champ . ":" . $valeur . "\n");
-        // fputs($fp, $datas . ":" . $valeur . "\n");
+        // Exécution de la requête SQL
+        if ($stmt->execute()) {
+            header("Location: connexion.php");
+            exit(); //  terminer le script ici pour éviter toute exécution supplémentaire
+    
+        } else {
+            die("Le formulaire est imcomplet");
+        }
     }
-
-    fclose($fp);
-    // var_dump($_POST);
-    // Redirige l'utilisateur vers une page de confirmation après la soumission réussie
-    header("Location: connexion.php");
-    exit(); //  terminer le script ici pour éviter toute exécution supplémentaire
-
-    } else {
-        die("Le formulaire est imcomplet");
-    }
-
-
-
 }
-?>
+    ?>
+    
+            // Les données ont été insérées avec succès
+        //     echo "Inscription réussie !";
+        //  else {
+        //     echo "Erreur lors de l'inscription.";
+        // }
+
+        // Fermeture de la connexion à la base de données
+        // $bd = null;
+
+        //je stock les données dans un fichier .txt
+
+        // elements à afficher
+        // $datas = $_POST;
+
+        // Ajout de la date (heure d'envoi) aux données
+        // $datas['timestamp'] = date('Y-m-d H:i:s');
+
+        // Je stocke le chemin du fichier vers lequel les données récupérés vont être affiché dans une variables
+        // $cheminTarget = "data_user.txt";
+
+        // La fonction fopen() = file open > permet d'ouvrir un fichier
+        // les paramètres de cette fonction sont (nom du fichier à ouvrir, mode d'ouverture du dit fichier)"a"=append
+        // $fp = fopen($cheminTarget, "a");
+
+        // Parcours des données et écriture dans le fichier txt
+        // foreach ($REQUEST as $data=>$valeur){
+        // foreach ($datas as $champ => $valeur) {
+        //     fwrite($fp, $champ . ":" . $valeur . "\n");
+        // fputs($fp, $datas . ":" . $valeur . "\n");
+        // }
+
+        // fclose($fp);
+        // var_dump($_POST);
+        // Redirige l'utilisateur vers une page de confirmation après la soumission réussie

@@ -3,7 +3,7 @@
 //le bloc try-catch permet de gérer les erreurs
 // je definie les constantes
 $servername = "localhost";
-$dbname = "record";
+$dbname = "session_php";
 $username = "heidi";
 $password = "ra#tro"; // serait il préférable de cacher le mot de passe ici ?
 try {

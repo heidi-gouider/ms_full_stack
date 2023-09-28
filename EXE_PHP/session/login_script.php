@@ -49,32 +49,49 @@ require_once('db_connect.php');
 
             // je vais hasher le mot de passe pour qu'il n'apparaisse pas en clair avec la fonction password_hash()
             // ici j'utilise la constante PASSWORD_DEFAULT avec la valeur password_bcrypte
-            $password_hash = password_hash("heidi", PASSWORD_DEFAULT);
+            $password_hash = password_hash("password", PASSWORD_DEFAULT);
             // $password_hash = password_hash($_POST["password"], PASSWORD_ARGON2ID);
 
-            // Vérifier si les données sont correctes en utilisant password_verify
-            if ($email === "heidi@ll.ll" && password_verify($password, $password_hash)) {
-                // var_dump($userMail, $password_hash);
-                // echo "Bienvenue " . $userMail . "!";
-                // Si les données sont correctes, initialiser la session
-                // la variable de session "auth" est utilisée pour suivre si un utilisateur est authentifié (connecté) 
-                $_SESSION["auth"] = "ok";
+    $sql = "SELECT email, mot_de_passe FROM user WHERE email = :email";
+        // Préparation de la requête SQL
+        $stmt = $db->prepare($sql);
 
+        // liaison des valeurs
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        // $stmt->bindParam(':mot_de_passe', $password_hash, PDO::PARAM_STR);
 
-                //voir comment utiliser la fonction strip_tags()
+           // Exécution de la requête SQL
+           if ($stmt->execute()) {
+            // Récupération du résultat de la requête
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Vérification si l'e-mail existe dans la base de données
+            if ($result) {
+                // Récupération du mot de passe haché de la base de données
+                $password_hash_from_db = $result['mot_de_passe'];
+
+                // Vérification si le mot de passe saisi correspond au mot de passe haché de la base de données
+                if (password_verify($password, $password_hash_from_db)) {
+                    // Authentification réussie
+            $_SESSION["auth"] = "ok";
                 $_SESSION["email"] = $email;
-                $_SESSION["password"] = $password_hash;
-
-                // var_dump($passwowrd)
+                // $_SESSION["password"] = $password_hash;
 
                 //je redirige vers une autre page 
                 header("Location:connexion.php");
                 exit();
+
             } else {
                 // si les données fournies ne sont pas correctes, je détruit les variables de session
-                unset($_SESSION["email"]);
-                unset($_SESSION["password"]);
-
+                // unset($_SESSION["email"]);
+                // unset($_SESSION["password"]);
+      // Mot de passe incorrect
+      unset($_SESSION["email"]);
+      session_destroy();
+      $_SESSION['error_message'] = 'Mot de passe incorrect !';
+      header("Location: login_form.php");
+      exit();
+  }
                 // Si les cookies de session sont utilisés, les invalider
                 if (ini_get("session.use_cookies")) {
                     setcookie(session_name(), '', time() - 42000);
@@ -91,7 +108,7 @@ require_once('db_connect.php');
                 // echo "Données incorrectes !";
 
             }
-
+        }
 
         // } else {
         //     die("formulaire imcomplet!");
