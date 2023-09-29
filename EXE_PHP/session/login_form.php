@@ -63,7 +63,7 @@ if (isset($_SESSION['error_message'])) {
 
     <!-- class="validation row col-8 m-5 " -->
 <div class="col-md-6 mb-4">
-    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <label for="email" class="form-label">Email</label>
     <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
     <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
   </div>
@@ -75,7 +75,7 @@ if (isset($_SESSION['error_message'])) {
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">Se souvenir de moi</label>
   </div> -->
-  <button type="submit" class="btn btn-primary">Envoyer</button>
+  <button type="submit" class="btn btn-primary">Me connecter</button>
 </form>
  </div>
 
