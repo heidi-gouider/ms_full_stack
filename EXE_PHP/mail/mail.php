@@ -1,8 +1,9 @@
 <?php
 // après configuration du serveur mail MailHog et l'installation de PHPMailer
+//j'importe les classes 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\src\SMTP;
+// use PHPMailer\PHPMailer\src\SMTP;
 
 
 require_once './vendor/phpmailer/phpmailer/src/PHPMailer.php';
