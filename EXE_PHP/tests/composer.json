@@ -1,0 +1,16 @@
+{
+    "name": "tests/phpunit",
+    "description": "\"Tests PHPUnit pour mon application.\"",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Heidi",
+            "email": "gouider.heidi@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "9.6.x-dev"
+    }
+}
